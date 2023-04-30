@@ -1,5 +1,24 @@
 extends ../layout/index.pug
 
 block content
-  div
-    h2.text-center.text-2xl.font-extrabold Register
+  div.py-4
+    h1.text-4xl.my-10.font-extrabold.text-center Real
+      span.font-normal State
+    h2.text-center.text-2xl.font-extrabold= title
+    .mt-8.mx-auto.max-w-md
+      .bg-white.py-5.px-4.shadow
+        form(action="").space-y-5
+          div 
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="fullname") Full Name
+            input#fullname.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", placeholder="John Doe", type="text", name="fullname", required)
+          div
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
+            input#email.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", type="email", name="email", required, placeholder="example@email.com")
+          div
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Password
+            input#password.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", type="password", name="password", required, placeholder="********")
+          div
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password-confirm") Confirm password
+            input#password-confirm.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900( class="placeholder:text-gray-400",type="password", name="password-confirm", required, placeholder="********")
+          
+          input(class="bg-indigo-700 text-white font-bold py-2 px-5 rounded-md cursor-pointer w-full hover:bg-indigo-500 ", type="submit", value="Register")
