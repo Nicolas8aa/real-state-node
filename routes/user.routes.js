@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  forgetPassword,
+  forgotPassword,
   loginForm,
   registerForm,
 } from "../controllers/user.controller.js";
@@ -11,6 +11,6 @@ router.get("/login", loginForm);
 
 router.get("/register", registerForm);
 
-router.get("/forget-password", forgetPassword);
+router.get("/forgot-password", forgotPassword);
 
 export default router;

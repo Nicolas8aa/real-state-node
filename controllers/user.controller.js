@@ -5,8 +5,8 @@ const loginForm = (req, res) => {
 const registerForm = (req, res) => {
   res.render("auth/register", { title: "Register" });
 };
-const forgetPassword = (req, res) => {
-  res.render("auth/forget-password", { title: "Recover your access" });
+const forgotPassword = (req, res) => {
+  res.render("auth/forgot-password", { title: "Recover your access" });
 };
 
-export { loginForm, registerForm, forgetPassword };
+export { loginForm, registerForm, forgotPassword };
