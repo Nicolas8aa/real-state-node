@@ -5,21 +5,26 @@ block content
     h1.text-4xl.my-10.font-extrabold.text-center Real
       span.font-normal State
     h2.text-center.text-2xl.font-extrabold= title
+    if errors
+      div.rounded.relative.max-w-md.mx-auto.my-5(role="alert")
+        each error in errors
+          p.bg-red-100.border.border-red-400.text-red-700.uppercase.text-xs.text-center.p-2.mb-1.font-bold= error.msg
+          //- span.block.sm= error.msg
     .mt-8.mx-auto.max-w-md
       .bg-white.py-5.px-4.shadow
-        form(action="").space-y-5
+        form(action="/auth/register" method="POST").space-y-5
           div 
-            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="fullname") Full Name
-            input#fullname.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", placeholder="John Doe", type="text", name="fullname", required)
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="name") Full Name
+            input#fullname.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", placeholder="John Doe", type="text", name="name", value= user ? user.name : '')
           div
             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
-            input#email.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", type="email", name="email", required, placeholder="example@email.com")
+            input#email.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", type="email", name="email",  placeholder="example@email.com", value= user ? user.email : '')
           div
             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Password
-            input#password.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", type="password", name="password", required, placeholder="********")
+            input#password.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900(class="placeholder:text-gray-400", type="password", name="password",  placeholder="********")
           div
             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password-confirm") Confirm password
-            input#password-confirm.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900( class="placeholder:text-gray-400",type="password", name="password-confirm", required, placeholder="********")
+            input#password-confirm.block.w-full.border.border-gray-300.rounded-md.py-2.px-3.mb-3.placeholder-gray-500.text-gray-900( class="placeholder:text-gray-400",type="password", name="password-confirm",  placeholder="********")
           
           input(class="bg-indigo-700 text-white font-bold py-2 px-5 rounded-md cursor-pointer w-full hover:bg-indigo-500 ", type="submit", value="Register")
           div.flex.items-center.justify-between

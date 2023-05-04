@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
-import db from "../config/db";
+import bcrypt from "bcrypt";
+import db from "../config/db.js";
 
 const User = db.define(
   "user",
@@ -21,6 +22,12 @@ const User = db.define(
   },
   {
     tableName: "users",
+    hooks: {
+      beforeCreate: async (user) => {
+        user.password = await bcrypt.hash(user.password, 10);
+        user.confirmed = false;
+      },
+    },
   }
 );
 

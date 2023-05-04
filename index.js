@@ -9,11 +9,13 @@ const app = express();
 // connect to database
 try {
   await dbConfig.authenticate();
+  dbConfig.sync();
   console.log("Connection has been established successfully.");
 } catch (error) {
   console.error("Unable to connect to the database:", error);
 }
 
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "pug");
 app.set("views", "./views");
 
