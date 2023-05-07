@@ -1,16 +1,18 @@
 import { check, validationResult } from "express-validator";
 
 import User from "../models/User.js";
+import { generateId } from "../helpers/tokens.js";
+import { registerEmail } from "../helpers/email.js";
 
-const loginForm = (req, res) => {
+export const loginForm = (req, res) => {
   res.render("auth/login", { title: "Login" });
 };
 
-const registerForm = (req, res) => {
+export const registerForm = (req, res) => {
   res.render("auth/register", { title: "Register" });
 };
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   await check("name", "Name is required").notEmpty().run(req);
   await check("email", "Email is not valid").isEmail().run(req);
   await check("password", "Password must be at least 6 characters")
@@ -54,14 +56,43 @@ const register = async (req, res) => {
     name,
     email,
     password,
-    token: "123456",
+    token: generateId(),
   });
 
-  res.json(user);
+  // ? send email to user
+  await registerEmail({
+    name: user.name,
+    email: user.email,
+    token: user.token,
+  });
+
+  return res.render("templates/message", {
+    title: "Register success",
+    message: "Please check your email to confirm your account",
+  });
 };
 
-const forgotPassword = (req, res) => {
+export const confirm = async (req, res) => {
+  const { token } = req.params;
+
+  const user = await User.findOne({ where: { token } });
+
+  if (!user)
+    return res.render("templates/message", {
+      title: "Error confirming account",
+      error: true,
+      message: "Sorry, this account does not exist",
+    });
+
+  user.confirmed = true;
+  user.token = null;
+  await user.save();
+  return res.render("templates/message", {
+    title: "Account confirmed",
+    message: "Your account has been confirmed",
+  });
+};
+
+export const forgotPassword = (req, res) => {
   res.render("auth/forgot-password", { title: "Recover your access" });
 };
-
-export { loginForm, registerForm, forgotPassword, register };
